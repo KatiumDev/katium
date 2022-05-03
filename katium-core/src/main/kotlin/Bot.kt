@@ -30,6 +30,7 @@ import kotlin.coroutines.CoroutineContext
 abstract class Bot(
     val platform: BotPlatform,
     val selfID: LocalChatID,
+    val config: Map<String, String>,
 ) : CoroutineScope, EventScope {
 
     val selfGlobalID = GlobalChatID(platform, selfID)
