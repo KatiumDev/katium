@@ -1,0 +1,87 @@
+/*
+ * Copyright 2022 Katium Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package katium.core
+
+import katium.core.chat.GlobalChatID
+import katium.core.chat.LocalChatID
+import katium.core.user.Contact
+import katium.core.user.User
+import katium.core.util.event.EventBus
+import katium.core.util.event.EventScope
+import kotlinx.coroutines.*
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import javax.swing.GroupLayout.Group
+import kotlin.coroutines.CoroutineContext
+
+abstract class Bot(
+    val platform: BotPlatform,
+    val selfID: LocalChatID,
+) : CoroutineScope, EventScope {
+
+    val selfGlobalID = GlobalChatID(platform, selfID)
+
+    val logger: Logger = LoggerFactory.getLogger(selfGlobalID.descriptor)
+
+    override val coroutineContext: CoroutineContext by lazy {
+        CoroutineName(selfGlobalID.descriptor) + supervisorJob
+    }
+
+    override val eventBus: EventBus by lazy {
+        EventBus(coroutineContext)
+    }
+
+    val supervisorJob = SupervisorJob()
+
+    abstract val loopJob: Job
+
+    fun start() = loopJob.start()
+
+    suspend fun startAndJoin() {
+        start()
+        join()
+    }
+
+    suspend fun join() = loopJob.join()
+
+    val isActive get() = loopJob.isActive
+
+    abstract val isConnected: Boolean
+
+    abstract val isOnline: Boolean
+
+    abstract val allContacts: Set<Contact>
+
+    abstract fun getUser(id: LocalChatID): User
+
+    abstract fun getGroup(id: LocalChatID): Group
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Bot) return false
+        if (selfGlobalID != other.selfGlobalID) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return selfGlobalID.hashCode()
+    }
+
+    override fun toString(): String {
+        return "Bot($selfGlobalID)"
+    }
+
+}
