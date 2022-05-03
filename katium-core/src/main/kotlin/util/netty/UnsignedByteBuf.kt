@@ -1,4 +1,4 @@
-package katium.core.util
+package katium.core.util.netty
 
 import io.netty.buffer.ByteBuf
 
