@@ -51,12 +51,12 @@ abstract class Bot(
 
     fun start() = loopJob.start()
 
+    suspend fun join() = loopJob.join()
+
     suspend fun startAndJoin() {
         start()
         join()
     }
-
-    suspend fun join() = loopJob.join()
 
     val isActive get() = loopJob.isActive
 
