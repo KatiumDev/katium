@@ -17,6 +17,7 @@ package katium.core
 
 import katium.core.chat.GlobalChatID
 import katium.core.chat.LocalChatID
+import katium.core.group.Group
 import katium.core.review.ReviewMessage
 import katium.core.user.Contact
 import katium.core.user.User
@@ -25,7 +26,6 @@ import katium.core.util.event.EventScope
 import kotlinx.coroutines.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import javax.swing.GroupLayout.Group
 import kotlin.coroutines.CoroutineContext
 
 abstract class Bot(
