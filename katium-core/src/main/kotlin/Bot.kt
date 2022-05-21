@@ -17,6 +17,7 @@ package katium.core
 
 import katium.core.chat.GlobalChatID
 import katium.core.chat.LocalChatID
+import katium.core.review.ReviewMessage
 import katium.core.user.Contact
 import katium.core.user.User
 import katium.core.util.event.EventBus
@@ -70,6 +71,10 @@ abstract class Bot(
 
     abstract fun getGroup(id: LocalChatID): Group
 
+    abstract val reviewMessages: Set<ReviewMessage>
+    open val unprocessedReviewMessages get() = reviewMessages.filter { !it.isProcessed }
+    fun getReviewMessage(id: String) = reviewMessages.find { it.id == id }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is Bot) return false
@@ -77,12 +82,8 @@ abstract class Bot(
         return true
     }
 
-    override fun hashCode(): Int {
-        return selfGlobalID.hashCode()
-    }
+    override fun hashCode() = selfGlobalID.hashCode()
 
-    override fun toString(): String {
-        return "Bot($selfGlobalID)"
-    }
+    override fun toString() = "Bot($selfGlobalID)"
 
 }
