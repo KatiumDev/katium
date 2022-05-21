@@ -72,7 +72,7 @@ abstract class Bot(
     abstract fun getGroup(id: LocalChatID): Group
 
     abstract val reviewMessages: Set<ReviewMessage>
-    open val unprocessedReviewMessages get() = reviewMessages.filter { !it.isProcessed }
+    open val unprocessedReviewMessages get() = reviewMessages.filter { !it.processed }
     fun getReviewMessage(id: String) = reviewMessages.find { it.id == id }
 
     override fun equals(other: Any?): Boolean {

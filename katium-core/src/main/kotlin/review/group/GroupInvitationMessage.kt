@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package katium.core.review
+package katium.core.review.group
 
-import katium.core.Bot
+import katium.core.chat.ChatInfo
+import katium.core.user.User
 
-abstract class ReviewMessage {
+abstract class GroupInvitationMessage(chatInfo: ChatInfo) : GroupReviewMessage(chatInfo) {
 
-    /**
-     * The bot which retrieved this message.
-     */
-    abstract val bot: Bot
-    abstract val id: String
-
-    abstract val processed: Boolean
-    abstract val suspicious: Boolean
-    abstract val message: String?
-
-    override fun toString() = "ReviewMessage(bot=$bot, id='$id')"
+    abstract val invitor: User
+    val invitorID get() = invitor.localID
 
 }

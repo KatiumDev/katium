@@ -41,8 +41,6 @@ abstract class User(override val bot: Bot, override val localID: LocalChatID) : 
         return result
     }
 
-    override fun toString(): String {
-        return "User($bot, $localID)"
-    }
+    override fun toString() = "User($bot, $localID)"
 
 }
