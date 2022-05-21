@@ -19,7 +19,8 @@ import katium.core.Bot
 import katium.core.util.event.BaseEvent
 
 abstract class BotEvent(val bot: Bot) : BaseEvent() {
-    fun component1(): Bot = bot
+
+    operator fun component1(): Bot = bot
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -28,9 +29,8 @@ abstract class BotEvent(val bot: Bot) : BaseEvent() {
         return true
     }
 
-    override fun hashCode(): Int {
-        return bot.hashCode()
-    }
+    override fun hashCode() = bot.hashCode()
+
 }
 
 class BotOnlineEvent(bot: Bot) : BotEvent(bot) {

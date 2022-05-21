@@ -19,7 +19,7 @@ import katium.core.BotPlatform
 
 open class LocalChatID(val id: String) {
 
-    fun component1() = id
+    operator fun component1() = id
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
