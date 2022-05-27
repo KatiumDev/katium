@@ -23,7 +23,13 @@ import katium.core.message.content.MessageContent
 import katium.core.user.Contact
 import katium.core.user.User
 
-abstract class Message(val bot: Bot, val context: Chat, val sender: ChatInfo, val content: MessageContent) {
+abstract class Message(
+    val bot: Bot,
+    val context: Chat,
+    val sender: ChatInfo,
+    val content: MessageContent,
+    val time: Long
+) {
 
     abstract val ref: MessageRef
 
@@ -42,6 +48,6 @@ abstract class Message(val bot: Bot, val context: Chat, val sender: ChatInfo, va
 
     override fun hashCode() = ref.hashCode()
 
-    override fun toString() = "Message($bot, $context, $sender: $content)"
+    override fun toString() = "Message($bot, $context, $sender: $content, time: $time, ref: $ref)"
 
 }
