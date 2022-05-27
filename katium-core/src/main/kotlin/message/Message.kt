@@ -40,12 +40,8 @@ abstract class Message(val bot: Bot, val context: Chat, val sender: ChatInfo, va
         return true
     }
 
-    override fun hashCode(): Int {
-        return ref.hashCode()
-    }
+    override fun hashCode() = ref.hashCode()
 
-    override fun toString(): String {
-        return "Message($bot, $context, $sender: $content)"
-    }
+    override fun toString() = "Message($bot, $context, $sender: $content)"
 
 }
