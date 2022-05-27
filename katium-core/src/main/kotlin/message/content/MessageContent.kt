@@ -19,6 +19,8 @@ abstract class MessageContent {
 
     abstract fun simplify(): MessageContent?
 
+    val simplest by lazy { simplify() ?: this }
+
     abstract fun concat(other: MessageContent): MessageContent?
 
     open fun merge(other: MessageContent): MessageContent = concat(other) ?: MessageChain(this, other)

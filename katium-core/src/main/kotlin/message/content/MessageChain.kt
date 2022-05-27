@@ -29,7 +29,7 @@ open class MessageChain(vararg parts: MessageContent) : MessageContent() {
         partList.toList()
     }
 
-    override fun simplify() = null
+    override fun simplify() = if (parts.size == 1) parts[0] else null
 
     override fun concat(other: MessageContent): MessageContent? = if (other is MessageChain) {
         MessageChain(*parts.toTypedArray(), *other.parts.toTypedArray())
