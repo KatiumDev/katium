@@ -15,17 +15,17 @@
  */
 package katium.core.message.content
 
-open class PlainTextMessage(val text: String) : MessageContent() {
+open class PlainText(val text: String) : MessageContent() {
 
     override fun simplify() = null
 
-    override fun concat(other: MessageContent) = if (other is PlainTextMessage) {
-        PlainTextMessage(text + other.text)
+    override fun concat(other: MessageContent) = if (other is PlainText) {
+        PlainText(text + other.text)
     } else null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is PlainTextMessage) return false
+        if (other !is PlainText) return false
         if (text != other.text) return false
         return true
     }
