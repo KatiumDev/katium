@@ -43,8 +43,8 @@ abstract class Chat(
 
     abstract val members: Set<User>
 
-    abstract fun sendMessage(message: MessageContent): MessageRef
-    abstract fun removeMessage(message: MessageRef)
+    abstract suspend fun sendMessage(message: MessageContent): MessageRef
+    abstract suspend fun removeMessage(message: MessageRef)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -60,8 +60,6 @@ abstract class Chat(
         return result
     }
 
-    override fun toString(): String {
-        return "Chat($bot, $localID)"
-    }
+    override fun toString() = "Chat($bot, $localID)"
 
 }
