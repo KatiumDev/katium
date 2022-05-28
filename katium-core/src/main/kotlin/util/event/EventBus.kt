@@ -80,7 +80,7 @@ class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.cor
 
     fun <T : Event> remove(type: Class<T>, handler: EventHandler<T>) = subscriptions[type]?.remove(handler)
 
-    suspend fun post(event: Event): Event? {
+    suspend fun <T: Event> post(event: T): T? {
         var type: Class<*> = event::class.java
         while (type.superclass != null) {
             subscriptions[type]?.forEach {
