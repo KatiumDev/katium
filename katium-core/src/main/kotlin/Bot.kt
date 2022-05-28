@@ -35,23 +35,22 @@ abstract class Bot(
 ) : CoroutineScope, EventScope {
 
     val selfGlobalID = GlobalChatID(platform, selfID)
-
     val logger: Logger = LoggerFactory.getLogger(selfGlobalID.descriptor)
+
+    val selfInfo by lazy {
+        getUserSync(selfID)
+    }
 
     override val coroutineContext: CoroutineContext by lazy {
         CoroutineName(selfGlobalID.descriptor) + supervisorJob
     }
-
     override val eventBus: EventBus by lazy {
         EventBus(coroutineContext)
     }
 
     val supervisorJob = SupervisorJob()
-
     abstract val loopJob: Job
-
     fun start() = loopJob.start()
-
     suspend fun join() = loopJob.join()
 
     suspend fun startAndJoin() {
@@ -60,9 +59,7 @@ abstract class Bot(
     }
 
     val isActive get() = loopJob.isActive
-
     abstract val isConnected: Boolean
-
     abstract val isOnline: Boolean
 
     abstract val allContacts: Set<Contact>
