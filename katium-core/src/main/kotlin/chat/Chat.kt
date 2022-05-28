@@ -34,9 +34,9 @@ abstract class Chat(
 
     override val chat: Chat get() = this
 
-    val contextUser: User? get() = if (context is User) context else null
+    val contextUser: User? get() = if (context is User) context else if (context is Contact) context.asUser else null
     val contextAsUser: User get() = contextUser ?: throw IllegalStateException("$this is not a user chat")
-    val contextContact: Contact? get() = contextUser?.asContact
+    val contextContact: Contact? get() = if (context is User) context.asContact else if (context is Contact) context else null
     val contextAsContact: Contact get() = contextContact ?: throw IllegalStateException("$this is not a contact chat")
     val contextGroup: Group? get() = if (context is Group) context else null
     val contextAsGroup: Group get() = contextGroup ?: throw IllegalStateException("$this is not a group chat")
