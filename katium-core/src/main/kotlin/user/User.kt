@@ -16,6 +16,7 @@
 package katium.core.user
 
 import katium.core.Bot
+import katium.core.chat.Chat
 import katium.core.chat.GlobalChatID
 import katium.core.chat.LocalChatID
 
@@ -26,6 +27,8 @@ abstract class User(override val bot: Bot, override val localID: LocalChatID) : 
     }
 
     abstract val asContact: Contact?
+
+    override val chat: Chat? get() = asContact?.chat
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
