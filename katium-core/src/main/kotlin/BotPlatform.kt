@@ -18,7 +18,7 @@ package katium.core
 import katium.core.util.service.Service
 import katium.core.util.service.ServiceLookup
 
-interface BotPlatform: Service {
+abstract class BotPlatform: Service {
 
     companion object {
 
@@ -26,10 +26,13 @@ interface BotPlatform: Service {
 
     }
 
-    val fullName: String
+    abstract val fullName: String
 
     val shortName: String get() = id
 
-    fun createBot(config: Map<String, String>): Bot
+    abstract fun createBot(config: Map<String, String>): Bot
+
+    override fun toString() = shortName
+
 
 }
