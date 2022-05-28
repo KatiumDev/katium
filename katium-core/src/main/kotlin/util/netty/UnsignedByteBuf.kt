@@ -33,7 +33,7 @@ fun ByteBuf.writeUByte(value: UByte): ByteBuf = writeByte(value.toInt())
 
 @Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalUnsignedTypes::class)
-fun ByteBuf.writeUByteArray(value: UByteArray): ByteBuf = writeBytes(value.toByteArray())
+fun ByteBuf.writeUBytes(value: UByteArray): ByteBuf = writeBytes(value.toByteArray())
 
 fun ByteBuf.writeUShort(value: UShort): ByteBuf = writeShort(value.toInt())
 
