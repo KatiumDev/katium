@@ -43,7 +43,7 @@ abstract class Chat(
 
     abstract val members: Set<User>
 
-    abstract suspend fun sendMessage(message: MessageContent): MessageRef
+    abstract suspend fun sendMessage(content: MessageContent): MessageRef
     abstract suspend fun removeMessage(message: MessageRef)
 
     override fun equals(other: Any?): Boolean {
