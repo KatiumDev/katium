@@ -68,8 +68,10 @@ abstract class Bot(
     abstract val allContacts: Set<Contact>
 
     abstract suspend fun getUser(id: LocalChatID): User
-
     abstract suspend fun getGroup(id: LocalChatID): Group
+
+    open fun getUserSync(id: LocalChatID) = runBlocking(coroutineContext) { getUser(id) }
+    open fun getGroupSync(id: LocalChatID) = runBlocking(coroutineContext) { getGroup(id) }
 
     abstract val reviewMessages: Set<ReviewMessage>
     open val unprocessedReviewMessages get() = reviewMessages.filter { !it.processed }
