@@ -67,9 +67,9 @@ abstract class Bot(
 
     abstract val allContacts: Set<Contact>
 
-    abstract fun getUser(id: LocalChatID): User
+    abstract suspend fun getUser(id: LocalChatID): User
 
-    abstract fun getGroup(id: LocalChatID): Group
+    abstract suspend fun getGroup(id: LocalChatID): Group
 
     abstract val reviewMessages: Set<ReviewMessage>
     open val unprocessedReviewMessages get() = reviewMessages.filter { !it.processed }

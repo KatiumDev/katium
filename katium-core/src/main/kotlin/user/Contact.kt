@@ -28,8 +28,6 @@ abstract class Contact(val asUser: User): UserInfo by asUser {
         return asUser.hashCode()
     }
 
-    override fun toString(): String {
-        return "Contact($asUser)"
-    }
+    override fun toString() = "Contact($asUser)"
 
 }

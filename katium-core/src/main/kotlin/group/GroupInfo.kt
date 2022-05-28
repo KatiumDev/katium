@@ -15,11 +15,6 @@
  */
 package katium.core.group
 
-import katium.core.chat.Chat
 import katium.core.chat.ChatInfo
 
-interface GroupInfo: ChatInfo {
-
-    override val chat: Chat
-
-}
+interface GroupInfo : ChatInfo
