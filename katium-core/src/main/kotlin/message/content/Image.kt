@@ -15,7 +15,7 @@
  */
 package katium.core.message.content
 
-abstract class Image : MessageContent() {
+abstract class Image(val width: Int? = null, val height: Int? = null) : MessageContent() {
 
     abstract val contentUrl: String?
     abstract val contentBytes: ByteArray?
@@ -26,7 +26,11 @@ abstract class Image : MessageContent() {
 
     override fun toString() = "[Image]"
 
-    open class ImageWithContent internal constructor(override val contentBytes: ByteArray) : Image() {
+    open class ImageWithContent internal constructor(
+        override val contentBytes: ByteArray,
+        width: Int? = null,
+        height: Int? = null
+    ) : Image(width, height) {
 
         override val contentUrl: String?
             get() = null
@@ -36,4 +40,4 @@ abstract class Image : MessageContent() {
 }
 
 @Suppress("FunctionName")
-fun Image(data: ByteArray) = Image.ImageWithContent(data)
+fun Image(data: ByteArray, width: Int? = null, height: Int? = null) = Image.ImageWithContent(data, width, height)
