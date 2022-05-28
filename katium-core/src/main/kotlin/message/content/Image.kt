@@ -15,19 +15,25 @@
  */
 package katium.core.message.content
 
-abstract class MessageContent {
+abstract class Image : MessageContent() {
 
-    abstract fun simplify(): MessageContent?
+    abstract val contentUrl: String?
+    abstract val contentBytes: ByteArray?
 
-    val simplest by lazy { simplify() ?: this }
+    override fun simplify() = null
 
-    abstract fun concat(other: MessageContent): MessageContent?
+    override fun concat(other: MessageContent) = null
 
-    open fun merge(other: MessageContent): MessageContent = concat(other) ?: MessageChain(this, other)
+    override fun toString() = "[Image]"
 
-    abstract override fun toString(): String
+    open class ImageWithContent internal constructor(override val contentBytes: ByteArray) : Image() {
 
-    operator fun plus(other: MessageContent): MessageContent = merge(other)
-    operator fun plus(text: String) = merge(PlainText(text))
+        override val contentUrl: String?
+            get() = null
+
+    }
 
 }
+
+@Suppress("FunctionName")
+fun Image(data: ByteArray) = Image.ImageWithContent(data)
