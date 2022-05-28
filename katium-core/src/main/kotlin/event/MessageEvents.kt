@@ -1,5 +1,7 @@
 package katium.core.event
 
+import katium.core.Bot
+import katium.core.chat.Chat
 import katium.core.message.Message
 import katium.core.message.content.MessageContent
 
@@ -24,9 +26,9 @@ class MessageReceivedEvent(message: Message) : MessageEvent(message) {
 
 }
 
-class MessagePreSendEvent(message: Message, var content: MessageContent = message.content) : MessageEvent(message) {
+class MessagePreSendEvent(bot: Bot, val context: Chat, var content: MessageContent) : BotEvent(bot) {
 
-    override fun toString() = "MessagePreSendEvent(message=$message, content=$content)"
+    override fun toString() = "MessagePreSendEvent(context=$context, content=$content)"
 
 }
 
