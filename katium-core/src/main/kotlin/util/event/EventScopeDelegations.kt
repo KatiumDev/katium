@@ -19,4 +19,4 @@ fun EventScope.register(subscriber: EventListener) = eventBus.register(subscribe
 
 fun EventScope.unregister(subscriber: EventListener) = eventBus.unregister(subscriber)
 
-suspend fun EventScope.post(event: Event) = eventBus.post(event)
+suspend inline fun <T : Event> EventScope.post(event: T) = eventBus.post(event)
