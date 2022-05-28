@@ -17,20 +17,20 @@ abstract class MessageEvent(var message: Message) : BotEvent(message.bot) {
 
 }
 
-class ReceivedMessageEvent(message: Message) : MessageEvent(message) {
+class MessageReceivedEvent(message: Message) : MessageEvent(message) {
 
-    override fun toString() = "ReceivedMessageEvent(message=$message)"
-
-}
-
-class PreSendMessageEvent(message: Message) : MessageEvent(message) {
-
-    override fun toString() = "PreSendMessageEvent(message=$message)"
+    override fun toString() = "MessageReceivedEvent(message=$message)"
 
 }
 
-class PostSendMessageEvent(message: Message) : MessageEvent(message) {
+class MessagePreSendEvent(message: Message) : MessageEvent(message) {
 
-    override fun toString() = "PostSendMessageEvent(message=$message)"
+    override fun toString() = "MessagePreSendEvent(message=$message)"
+
+}
+
+class MessageSentEvent(message: Message) : MessageEvent(message) {
+
+    override fun toString() = "MessageSentEvent(message=$message)"
 
 }
