@@ -42,16 +42,16 @@ abstract class Bot(
     }
 
     override val coroutineContext: CoroutineContext by lazy {
-        CoroutineName(selfGlobalID.descriptor) + supervisorJob
+        CoroutineName(selfGlobalID.descriptor)
     }
     override val eventBus: EventBus by lazy {
         EventBus(coroutineContext)
     }
 
-    val supervisorJob = SupervisorJob()
     abstract val loopJob: Job
     fun start() = loopJob.start()
     suspend fun join() = loopJob.join()
+    abstract fun stop()
 
     suspend fun startAndJoin() {
         start()
