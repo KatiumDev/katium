@@ -38,7 +38,7 @@ abstract class Bot(
     val logger: Logger = LoggerFactory.getLogger(selfGlobalID.descriptor)
 
     val selfInfo by lazy {
-        getUserSync(selfID)
+        getUserSync(selfID)!!
     }
 
     override val coroutineContext: CoroutineContext by lazy {
