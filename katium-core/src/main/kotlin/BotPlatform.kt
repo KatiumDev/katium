@@ -34,5 +34,4 @@ abstract class BotPlatform: Service {
 
     override fun toString() = shortName
 
-
 }

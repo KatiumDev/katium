@@ -17,10 +17,8 @@ package katium.core.message
 
 import katium.core.Bot
 
-interface MessageRef {
+abstract class MessageRef(open val bot: Bot) {
 
-    val bot: Bot
-
-    val message: Message?
+    abstract val message: Message?
 
 }

@@ -23,9 +23,15 @@ import katium.core.user.Contact
 import katium.core.user.User
 import katium.core.util.event.EventBus
 import katium.core.util.event.EventScope
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.runBlocking
+import okio.Path
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.File
+import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
 abstract class Bot(
@@ -36,6 +42,10 @@ abstract class Bot(
 
     val selfGlobalID = GlobalChatID(platform, selfID)
     val logger: Logger = LoggerFactory.getLogger(selfGlobalID.descriptor)
+    val dataDirectory: File = File(config["katium.data_dir"] ?: "ktm_${platform}_${selfID.id}").also {
+        if (!it.exists() && !it.mkdirs()) throw IOException("Unable to create data directory: $it, ${it.absolutePath}")
+    }
+    val dataPath: Path
 
     val selfInfo by lazy {
         getUserSync(selfID)!!
