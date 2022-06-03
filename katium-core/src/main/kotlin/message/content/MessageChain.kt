@@ -17,6 +17,13 @@ package katium.core.message.content
 
 open class MessageChain(vararg parts: MessageContent) : MessageContent() {
 
+    companion object {
+
+        @JvmField
+        val EMPTY = MessageChain()
+
+    }
+
     val parts: List<MessageContent> = run {
         val partList = mutableListOf<MessageContent>()
         for (part in parts) {
@@ -50,5 +57,13 @@ open class MessageChain(vararg parts: MessageContent) : MessageContent() {
     }
 
     override fun toString() = parts.joinToString(separator = ", ", prefix = "[", postfix = "]")
+
+    override fun select(filter: (MessageContent) -> Boolean) = if (filter(this)) {
+        MessageChain(*parts.filter(filter).toTypedArray())
+    } else EMPTY
+
+    override fun without(filter: (MessageContent) -> Boolean) = if (filter(this)) {
+        MessageChain(*parts.filterNot(filter).toTypedArray())
+    } else EMPTY
 
 }

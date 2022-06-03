@@ -28,4 +28,7 @@ abstract class MessageContent {
     open fun asString() = toString()
     abstract override fun toString(): String
 
+    open fun select(filter: (MessageContent) -> Boolean) = if (filter(this)) this else MessageChain.EMPTY
+    open fun without(filter: (MessageContent) -> Boolean) = if (filter(this)) MessageChain.EMPTY else this
+
 }
