@@ -42,6 +42,6 @@ abstract class Group(override val bot: Bot, override val localID: LocalChatID) :
         return result
     }
 
-    override fun toString() = "Group($bot, $localID)"
+    override fun toString() = "Group($bot, $localID, $name)"
 
 }
