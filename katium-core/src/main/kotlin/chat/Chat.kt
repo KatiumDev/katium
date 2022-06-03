@@ -32,10 +32,11 @@ abstract class Chat(
     override val chat: Chat get() = this
 
     @Suppress("LeakingThis")
-    open val members: Set<User> =
+    open val members: Set<User> by lazy {
         if (contextUser != null) setOf(contextAsUser, bot.selfInfo)
         else if (contextGroup != null) contextAsGroup.members
         else throw IllegalStateException("Unsupported context type")
+    }
 
     open val contextUser: User? get() = if (context is User) context else if (context is Contact) context.asUser else null
     val contextAsUser: User get() = contextUser ?: throw IllegalStateException("$this is not a user chat")
