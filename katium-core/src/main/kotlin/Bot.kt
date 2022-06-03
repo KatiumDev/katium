@@ -63,6 +63,7 @@ abstract class Bot(
     abstract val isOnline: Boolean
 
     abstract val allContacts: Set<Contact>
+    abstract val allGroups: Set<Group>
 
     abstract suspend fun getUser(id: LocalChatID): User?
     abstract suspend fun getGroup(id: LocalChatID): Group?
