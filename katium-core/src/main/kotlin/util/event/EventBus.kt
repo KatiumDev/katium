@@ -17,6 +17,7 @@ package katium.core.util.event
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
+import java.util.Collections
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -30,7 +31,7 @@ import kotlin.reflect.jvm.jvmErasure
 @Suppress("OPT_IN_USAGE")
 class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.coroutineContext) : CoroutineScope {
 
-    private val subscriptions = mutableMapOf<Class<out Event>, MutableList<EventHandler<out Event>>>()
+    private val subscriptions: MutableMap<Class<out Event>, MutableList<EventHandler<out Event>>> = HashMap()
 
     fun register(subscriber: EventListener) {
         collectSubscribeMethods(subscriber::class).forEach {
@@ -59,8 +60,7 @@ class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.cor
             if (it.parameters.size != 1) {
                 throw IllegalArgumentException("Event handler $it has more than one parameter")
             }
-            subscriptions[it.parameters[0].type.jvmErasure.java]
-                ?.removeIf { handler -> handler is AnnotatedEventHandler && handler.sourceListener == subscriber }
+            subscriptions[it.parameters[0].type.jvmErasure.java]?.removeIf { handler -> handler is AnnotatedEventHandler && handler.sourceListener == subscriber }
         }
     }
 
@@ -70,7 +70,7 @@ class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.cor
     fun <T : Event> listen(type: KClass<T>, handler: EventHandler<T>) = listen(type.java, handler)
 
     fun <T : Event> listen(type: Class<T>, handler: EventHandler<T>) {
-        subscriptions.getOrPut(type) { mutableListOf<EventHandler<*>>() }.apply {
+        subscriptions.getOrPut(type) { Collections.synchronizedList(ArrayList<EventHandler<*>>()) }.apply {
             add(handler)
             sortBy { it.priority }
         }
@@ -80,7 +80,7 @@ class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.cor
 
     fun <T : Event> remove(type: Class<T>, handler: EventHandler<T>) = subscriptions[type]?.remove(handler)
 
-    suspend fun <T: Event> post(event: T): T? {
+    suspend fun <T : Event> post(event: T): T? {
         var type: Class<*> = event::class.java
         while (type.superclass != null) {
             subscriptions[type]?.forEach {
