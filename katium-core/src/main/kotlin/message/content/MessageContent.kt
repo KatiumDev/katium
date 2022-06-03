@@ -25,9 +25,7 @@ abstract class MessageContent {
 
     open fun merge(other: MessageContent): MessageContent = concat(other) ?: MessageChain(this, other)
 
+    open fun asString() = toString()
     abstract override fun toString(): String
-
-    operator fun plus(other: MessageContent): MessageContent = merge(other)
-    operator fun plus(text: String) = merge(PlainText(text))
 
 }

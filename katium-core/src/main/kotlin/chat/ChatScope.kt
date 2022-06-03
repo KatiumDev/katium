@@ -18,7 +18,7 @@ package katium.core.chat
 /**
  * Communicative interface
  */
-interface Chattable {
+interface ChatScope {
 
     /**
      * The chat which can be used to communicate.

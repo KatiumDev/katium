@@ -19,32 +19,37 @@ import katium.core.Bot
 import katium.core.group.Group
 import katium.core.message.MessageRef
 import katium.core.message.content.MessageContent
+import katium.core.message.content.PlainText
 import katium.core.user.Contact
 import katium.core.user.User
 
 abstract class Chat(
     override val bot: Bot,
     override val localID: LocalChatID,
-    val context: Chattable
-) : ChatInfo, Chattable {
-
-    override val globalID: GlobalChatID by lazy {
-        GlobalChatID(platform, localID)
-    }
+    val context: ChatInfo
+) : ChatInfo by context {
 
     override val chat: Chat get() = this
 
-    val contextUser: User? get() = if (context is User) context else if (context is Contact) context.asUser else null
+    @Suppress("LeakingThis")
+    open val members: Set<User> =
+        if (contextUser != null) setOf(contextAsUser, bot.selfInfo)
+        else if (contextGroup != null) contextAsGroup.members
+        else throw IllegalStateException("Unsupported context type")
+
+    open val contextUser: User? get() = if (context is User) context else if (context is Contact) context.asUser else null
     val contextAsUser: User get() = contextUser ?: throw IllegalStateException("$this is not a user chat")
-    val contextContact: Contact? get() = if (context is User) context.asContact else if (context is Contact) context else null
+    open val contextContact: Contact? get() = if (context is User) context.asContact else if (context is Contact) context else null
     val contextAsContact: Contact get() = contextContact ?: throw IllegalStateException("$this is not a contact chat")
-    val contextGroup: Group? get() = if (context is Group) context else null
+    open val contextGroup: Group? get() = if (context is Group) context else null
     val contextAsGroup: Group get() = contextGroup ?: throw IllegalStateException("$this is not a group chat")
 
-    abstract val members: Set<User>
-
     abstract suspend fun sendMessage(content: MessageContent): MessageRef?
-    abstract suspend fun removeMessage(message: MessageRef)
+    abstract suspend fun removeMessage(ref: MessageRef)
+
+    suspend operator fun MessageContent.unaryPlus() = sendMessage(this)
+    suspend operator fun String.unaryPlus() = sendMessage(PlainText(this))
+    suspend operator fun MessageRef.unaryMinus() = removeMessage(this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -60,6 +65,6 @@ abstract class Chat(
         return result
     }
 
-    override fun toString() = "Chat($bot, $localID)"
+    override fun toString() = "Chat($bot, $localID, $name)"
 
 }

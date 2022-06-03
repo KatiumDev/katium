@@ -15,6 +15,10 @@
  */
 package katium.core.message.content
 
+import katium.core.util.okhttp.GlobalHttpClient
+import katium.core.util.okhttp.expected
+import okhttp3.Request
+
 abstract class Image(val width: Int? = null, val height: Int? = null) : MessageContent() {
 
     abstract val contentUrl: String?
@@ -24,7 +28,7 @@ abstract class Image(val width: Int? = null, val height: Int? = null) : MessageC
 
     override fun concat(other: MessageContent) = null
 
-    override fun toString() = "[Image]"
+    override fun toString() = "[Image${contentUrl?.let { ", $it" } ?: ""}]"
 
     open class ImageWithContent internal constructor(
         override val contentBytes: ByteArray,
@@ -37,7 +41,22 @@ abstract class Image(val width: Int? = null, val height: Int? = null) : MessageC
 
     }
 
-}
+    open class ImageWithUrl internal constructor(
+        override val contentUrl: String,
+        width: Int? = null,
+        height: Int? = null
+    ) : Image(width, height) {
 
-@Suppress("FunctionName")
-fun Image(data: ByteArray, width: Int? = null, height: Int? = null) = Image.ImageWithContent(data, width, height)
+        override val contentBytes: ByteArray
+            get() = GlobalHttpClient.newCall(
+                Request.Builder()
+                    .get()
+                    .url(contentUrl)
+                    .build()
+            ).execute()
+                .expected(200)
+                .body.bytes()
+
+    }
+
+}
