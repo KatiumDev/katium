@@ -28,7 +28,10 @@ abstract class MessageContent {
     open fun asString() = toString()
     abstract override fun toString(): String
 
-    open fun select(filter: (MessageContent) -> Boolean) = if (filter(this)) this else MessageChain.EMPTY
+    open fun filter(filter: (MessageContent) -> Boolean) = if (filter(this)) this else MessageChain.EMPTY
     open fun without(filter: (MessageContent) -> Boolean) = if (filter(this)) MessageChain.EMPTY else this
+    open fun select(filter: (MessageContent) -> Boolean): Pair<Array<MessageContent>, Array<MessageContent>> =
+        if (filter(this)) arrayOf(this) to arrayOf(MessageChain.EMPTY)
+        else arrayOf(MessageChain.EMPTY as MessageContent) to arrayOf(this)
 
 }

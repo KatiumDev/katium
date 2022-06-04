@@ -15,6 +15,8 @@
  */
 package katium.core.message.content
 
+import java.util.*
+
 open class MessageChain(vararg parts: MessageContent) : MessageContent() {
 
     companion object {
@@ -59,12 +61,21 @@ open class MessageChain(vararg parts: MessageContent) : MessageContent() {
     override fun asString() = parts.joinToString(separator = "")
     override fun toString() = parts.joinToString(separator = ", ", prefix = "[", postfix = "]")
 
-    override fun select(filter: (MessageContent) -> Boolean) = if (filter(this)) {
+    override fun filter(filter: (MessageContent) -> Boolean) = if (filter(this)) {
         MessageChain(*parts.filter(filter).toTypedArray())
     } else EMPTY
 
     override fun without(filter: (MessageContent) -> Boolean) = if (filter(this)) {
         MessageChain(*parts.filterNot(filter).toTypedArray())
     } else EMPTY
+
+    override fun select(filter: (MessageContent) -> Boolean): Pair<Array<MessageContent>, Array<MessageContent>> {
+        val matched = LinkedList<MessageContent>()
+        val unmatched = linkedSetOf<MessageContent>()
+        parts.forEach {
+            (if (filter(it)) matched else unmatched).add(it)
+        }
+        return matched.toTypedArray() to unmatched.toTypedArray()
+    }
 
 }
