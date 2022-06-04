@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 @file:Suppress("FunctionName")
-@file:JvmName("Ats")
+@file:JvmName("Refs")
 
 package katium.core.message.builder
 
