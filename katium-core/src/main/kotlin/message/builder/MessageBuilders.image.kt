@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("FunctionName")
 @file:JvmName("ImageMessages")
 
 package katium.core.message.builder
@@ -26,23 +27,32 @@ import java.net.URI
 import java.net.URL
 import javax.imageio.ImageIO
 
-@Suppress("FunctionName")
+@JvmName("of")
+@JvmOverloads
 fun Image(data: ByteArray, width: Int? = null, height: Int? = null) = Image.ImageWithContent(data, width, height)
 
-@Suppress("FunctionName")
+@JvmName("of")
+@JvmOverloads
 fun Image(url: String, width: Int? = null, height: Int? = null) = Image.ImageWithUrl(url, width, height)
 
-@Suppress("FunctionName")
+@JvmName("of")
+@JvmOverloads
 fun Image(url: URL, width: Int? = null, height: Int? = null) = Image(url.toString(), width, height)
 
-@Suppress("FunctionName")
+@JvmName("of")
+@JvmOverloads
 fun Image(url: URI, width: Int? = null, height: Int? = null) = Image(url.toURL(), width, height)
 
-@Suppress("FunctionName")
+@JvmName("of")
+@JvmOverloads
 fun Image(file: File, width: Int? = null, height: Int? = null) = Image(file.readBytes(), width, height)
 
-operator fun MessageContent.plus(image: BufferedImage) =
-    merge(Image(ByteArrayOutputStream().apply {
+@JvmName("of")
+@JvmOverloads
+fun Image(image: BufferedImage, width: Int? = image.width, height: Int? = image.height) =
+    Image(ByteArrayOutputStream().apply {
         if (!ImageIO.write(image, "PNG", this))
             throw UnsupportedOperationException("Unable to encode BufferedImage")
-    }.toByteArray(), image.width, image.height))
+    }.toByteArray(), width, height)
+
+operator fun MessageContent.plus(image: BufferedImage) = merge(Image(image))

@@ -30,9 +30,7 @@ open class PlainText(val text: String) : MessageContent() {
         return true
     }
 
-    override fun hashCode(): Int {
-        return text.hashCode()
-    }
+    override fun hashCode() = text.hashCode()
 
     override fun toString() = "\"$text\""
 
