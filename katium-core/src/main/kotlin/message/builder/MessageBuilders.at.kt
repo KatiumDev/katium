@@ -19,6 +19,7 @@
 package katium.core.message.builder
 
 import katium.core.chat.Chat
+import katium.core.chat.ChatInfo
 import katium.core.chat.GlobalChatID
 import katium.core.chat.LocalChatID
 import katium.core.message.content.At
@@ -33,7 +34,7 @@ fun At(target: LocalChatID) = At(target)
 fun At(target: GlobalChatID) = At(target.localID)
 
 @JvmName("of")
-fun At(target: UserInfo) = At(target.localID)
+fun At(target: ChatInfo) = At(target.localID)
 
 @JvmName("of")
 fun At(target: Chat) = At(target.contextAsUser)
