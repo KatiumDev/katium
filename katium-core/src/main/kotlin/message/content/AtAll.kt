@@ -15,24 +15,18 @@
  */
 package katium.core.message.content
 
-open class PlainText(val text: String) : MessageContent() {
+open class AtAll internal constructor() : MessageContent() {
+
+    companion object : AtAll()
 
     override fun simplify() = null
+    override fun concat(other: MessageContent) = null
 
-    override fun concat(other: MessageContent) = if (other is PlainText) {
-        PlainText(text + other.text)
-    } else null
+    override fun equals(other: Any?) = other is AtAll
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is PlainText) return false
-        if (text != other.text) return false
-        return true
-    }
+    override fun hashCode() = 1761951244
 
-    override fun hashCode() = text.hashCode()
-
-    override fun asString() = text
-    override fun toString() = "\"$text\""
+    override fun asString() = "@ALL "
+    override fun toString() = "[@ALL]"
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 @file:Suppress("FunctionName")
-@file:JvmName("ImageMessages")
+@file:JvmName("Images")
 
 package katium.core.message.builder
 

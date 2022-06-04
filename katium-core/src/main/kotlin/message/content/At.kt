@@ -15,24 +15,23 @@
  */
 package katium.core.message.content
 
-open class PlainText(val text: String) : MessageContent() {
+import katium.core.chat.LocalChatID
+
+open class At(val target: LocalChatID) : MessageContent() {
 
     override fun simplify() = null
-
-    override fun concat(other: MessageContent) = if (other is PlainText) {
-        PlainText(text + other.text)
-    } else null
+    override fun concat(other: MessageContent) = null
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is PlainText) return false
-        if (text != other.text) return false
+        if (other !is At) return false
+        if (target != other.target) return false
         return true
     }
 
-    override fun hashCode() = text.hashCode()
+    override fun hashCode() = target.hashCode()
 
-    override fun asString() = text
-    override fun toString() = "\"$text\""
+    override fun asString() = "@${target.id} "
+    override fun toString() = "[@$target]"
 
 }

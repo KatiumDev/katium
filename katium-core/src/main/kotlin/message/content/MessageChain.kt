@@ -56,6 +56,7 @@ open class MessageChain(vararg parts: MessageContent) : MessageContent() {
         return result
     }
 
+    override fun asString() = parts.joinToString(separator = "")
     override fun toString() = parts.joinToString(separator = ", ", prefix = "[", postfix = "]")
 
     override fun select(filter: (MessageContent) -> Boolean) = if (filter(this)) {
