@@ -26,16 +26,34 @@ open class MessageChain(vararg parts: MessageContent) : MessageContent() {
 
     }
 
+    constructor(parts: Collection<MessageContent>) : this(*parts.toTypedArray())
+
     val parts: List<MessageContent> = run {
-        val partList = mutableListOf<MessageContent>()
+        val partsList = mutableListOf<MessageContent>()
         for (part in parts) {
             if (part is MessageChain) {
-                partList.addAll(part.parts)
+                partsList.addAll(part.parts)
             } else {
-                partList.add(part)
+                partsList.add(part)
             }
         }
-        partList.toList()
+        // Simplify
+        if (partsList.isNotEmpty()) {
+            simplify@ while (true) {
+                for (index in 1 until partsList.size) {
+                    val current = partsList[index]
+                    val last = partsList[index - 1]
+                    val concat = last.concat(current)
+                    if (concat != null) {
+                        partsList.removeAt(index)
+                        partsList[index - 1] = concat
+                        continue@simplify
+                    }
+                }
+                break
+            }
+        }
+        partsList.toList()
     }
 
     override fun simplify() = if (parts.size == 1) parts[0] else null
