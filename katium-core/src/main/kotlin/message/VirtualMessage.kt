@@ -33,3 +33,5 @@ class VirtualMessage(
     class Ref(override val message: VirtualMessage) : MessageRef(message.bot)
 
 }
+
+fun Message.asVirtual() = VirtualMessage(bot, context, sender, content, time)

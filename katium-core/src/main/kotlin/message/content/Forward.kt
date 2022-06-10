@@ -33,7 +33,7 @@ open class Forward(val messages: List<MessageRef>) : MessageContent() {
 
     override fun hashCode() = messages.hashCode()
 
-    override fun asString() = "(Forwarded {$})"
-    override fun toString() = "{$}"
+    override fun asString() = "(Forwarded {$messages})"
+    override fun toString() = "{$messages}"
 
 }
