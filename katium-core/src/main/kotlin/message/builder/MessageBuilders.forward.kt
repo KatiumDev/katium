@@ -25,8 +25,11 @@ import katium.core.message.content.MessageContent
 @JvmName("of")
 fun Forward(messages: Collection<MessageRef>) = Forward(messages.toList())
 
-@JvmName("of")
+@JvmName("ofArray")
 fun Forward(messages: Array<MessageRef>) = Forward(messages.toList())
+
+@JvmName("of")
+fun Forward(vararg messages: MessageRef) = Forward(messages.toList())
 
 operator fun MessageContent.plus(messages: Collection<MessageRef>) = merge(Forward(messages.toList()))
 operator fun MessageContent.plus(messages: Array<MessageRef>) = merge(Forward(messages.toList()))
