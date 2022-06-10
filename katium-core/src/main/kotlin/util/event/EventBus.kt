@@ -17,7 +17,7 @@ package katium.core.util.event
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
-import java.util.Collections
+import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume

@@ -15,7 +15,7 @@
  */
 package katium.core.user
 
-abstract class Contact(open val asUser: User): UserInfo by asUser {
+abstract class Contact(open val asUser: User) : UserInfo by asUser {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

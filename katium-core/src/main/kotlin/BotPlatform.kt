@@ -18,7 +18,7 @@ package katium.core
 import katium.core.util.service.Service
 import katium.core.util.service.ServiceLookup
 
-abstract class BotPlatform: Service {
+abstract class BotPlatform : Service {
 
     companion object {
 

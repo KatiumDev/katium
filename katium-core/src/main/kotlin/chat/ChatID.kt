@@ -28,7 +28,7 @@ open class LocalChatID(val id: String) {
         return true
     }
 
-    override fun hashCode()= id.hashCode()
+    override fun hashCode() = id.hashCode()
 
     override fun toString() = id
 

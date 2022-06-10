@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("FunctionName")
-@file:JvmName("Images")
+@file:Suppress("FunctionName") @file:JvmName("Images")
 
 package katium.core.message.builder
 
@@ -51,8 +50,7 @@ fun Image(file: File, width: Int? = null, height: Int? = null) = Image(file.read
 @JvmOverloads
 fun Image(image: BufferedImage, width: Int? = image.width, height: Int? = image.height) =
     Image(ByteArrayOutputStream().apply {
-        if (!ImageIO.write(image, "PNG", this))
-            throw UnsupportedOperationException("Unable to encode BufferedImage")
+        if (!ImageIO.write(image, "PNG", this)) throw UnsupportedOperationException("Unable to encode BufferedImage")
     }.toByteArray(), width, height)
 
 operator fun MessageContent.plus(image: BufferedImage) = merge(Image(image))

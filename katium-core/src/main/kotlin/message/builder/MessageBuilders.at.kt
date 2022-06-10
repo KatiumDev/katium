@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("FunctionName")
-@file:JvmName("Ats")
+@file:Suppress("FunctionName") @file:JvmName("Ats")
 
 package katium.core.message.builder
 

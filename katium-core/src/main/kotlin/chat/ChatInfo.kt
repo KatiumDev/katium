@@ -18,7 +18,6 @@ package katium.core.chat
 import katium.core.Bot
 import katium.core.BotPlatform
 import katium.core.group.GroupInfo
-import katium.core.user.User
 import katium.core.user.UserInfo
 
 /**
@@ -29,7 +28,7 @@ import katium.core.user.UserInfo
  * @see UserInfo
  * @see GroupInfo
  */
-interface ChatInfo: ChatScope {
+interface ChatInfo : ChatScope {
 
     /**
      * The bot which retrieved this chat.
