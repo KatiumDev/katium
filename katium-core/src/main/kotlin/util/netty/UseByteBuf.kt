@@ -24,3 +24,11 @@ fun ByteBuf.use(block: (ByteBuf) -> Unit) {
         release()
     }
 }
+
+suspend fun ByteBuf.useSuspend(block: suspend (ByteBuf) -> Unit) {
+    try {
+        block(this)
+    } finally {
+        release()
+    }
+}
