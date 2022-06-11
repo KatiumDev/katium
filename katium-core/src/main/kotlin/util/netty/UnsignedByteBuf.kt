@@ -31,7 +31,6 @@ fun ByteBuf.readULong(): ULong = readLong().toULong()
 
 fun ByteBuf.writeUByte(value: UByte): ByteBuf = writeByte(value.toInt())
 
-@Suppress("OPT_IN_IS_NOT_ENABLED")
 @OptIn(ExperimentalUnsignedTypes::class)
 fun ByteBuf.writeUBytes(value: UByteArray): ByteBuf = writeBytes(value.toByteArray())
 

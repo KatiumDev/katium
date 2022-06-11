@@ -16,6 +16,7 @@
 package katium.core.util.event
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList
@@ -29,8 +30,8 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.memberFunctions
 import kotlin.reflect.jvm.jvmErasure
 
-@Suppress("OPT_IN_USAGE")
-class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.coroutineContext) : CoroutineScope {
+class EventBus @OptIn(DelicateCoroutinesApi::class) constructor(override val coroutineContext: CoroutineContext = GlobalScope.coroutineContext) :
+    CoroutineScope {
 
     private val subscriptions: MutableMap<Class<out Event>, MutableList<EventHandler<out Event>>> = HashMap()
 

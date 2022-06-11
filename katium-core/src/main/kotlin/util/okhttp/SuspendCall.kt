@@ -15,6 +15,7 @@
  */
 package katium.core.util.okhttp
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call
 import okhttp3.Callback
@@ -22,11 +23,11 @@ import okhttp3.Response
 import okio.IOException
 import kotlin.coroutines.resumeWithException
 
-@Suppress("OPT_IN_USAGE")
 suspend fun Call.await(): Response {
     return suspendCancellableCoroutine { continuation ->
         enqueue(object : Callback {
 
+            @OptIn(ExperimentalCoroutinesApi::class)
             override fun onResponse(call: Call, response: Response) {
                 continuation.resume(response) {
                     response.close()

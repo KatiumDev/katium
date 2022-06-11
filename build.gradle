@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.21' apply false
+    id 'org.jetbrains.kotlin.jvm' version '1.7.0' apply false
     id 'org.jetbrains.dokka' version '1.6.21'
     id 'org.jetbrains.kotlinx.binary-compatibility-validator' version '0.9.0'
     id 'net.kyori.indra.license-header' version '2.1.0' apply false
