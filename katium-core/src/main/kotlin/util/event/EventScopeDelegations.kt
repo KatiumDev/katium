@@ -15,8 +15,15 @@
  */
 package katium.core.util.event
 
+import java.util.*
+import kotlin.reflect.KClass
+
 fun EventScope.register(subscriber: EventListener) = eventBus.register(subscriber)
 
 fun EventScope.unregister(subscriber: EventListener) = eventBus.unregister(subscriber)
 
 suspend inline fun <T : Event> EventScope.post(event: T) = eventBus.post(event)
+
+suspend fun <T : Event> EventScope.await(type: Class<T>) = eventBus.await(type)
+
+suspend fun <T : Event> EventScope.await(type: KClass<T>) = eventBus.await(type)

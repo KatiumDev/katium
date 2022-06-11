@@ -15,6 +15,7 @@
  */
 package katium.core.util.event
 
+import java.util.*
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.callSuspend
 

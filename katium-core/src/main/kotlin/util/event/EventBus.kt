@@ -43,14 +43,9 @@ class EventBus(override val coroutineContext: CoroutineContext = GlobalScope.cor
                 throw IllegalArgumentException("Event handler $it has non-Event parameter")
             }
             val annotation = it.findAnnotation<Subscribe>()!!
-            @Suppress("UNCHECKED_CAST")
-            listen(
-                it.parameters[1].type.jvmErasure as KClass<out Event>,
-                AnnotatedEventHandler(
-                    annotation.priority,
-                    annotation.async,
-                    subscriber,
-                    it
+            @Suppress("UNCHECKED_CAST") listen(
+                it.parameters[1].type.jvmErasure as KClass<out Event>, AnnotatedEventHandler(
+                    annotation.priority, annotation.async, subscriber, it
                 )
             )
         }
