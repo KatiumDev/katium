@@ -17,17 +17,9 @@ package katium.core.util.netty
 
 import io.netty.buffer.ByteBuf
 
-fun ByteBuf.use(block: (ByteBuf) -> Unit) {
+inline fun <T> ByteBuf.use(block: (ByteBuf) -> T): T {
     try {
-        block(this)
-    } finally {
-        release()
-    }
-}
-
-suspend fun ByteBuf.useSuspend(block: suspend (ByteBuf) -> Unit) {
-    try {
-        block(this)
+        return block(this)
     } finally {
         release()
     }
