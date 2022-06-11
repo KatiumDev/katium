@@ -29,7 +29,7 @@ open class ServiceLookup<T : Service> @JvmOverloads constructor(
     val services: Set<T> by lazy {
         providers.map { it.lookup(type) }
             .flatten()
-            .sortedBy { it.priority }
+            .sortedByDescending { it.priority }
             .toSet()
     }
 
