@@ -47,8 +47,8 @@ abstract class Image(val width: Int? = null, val height: Int? = null) : MessageC
         height: Int? = null
     ) : Image(width, height) {
 
-        override val contentBytes: ByteArray
-            get() = GlobalHttpClient.newCall(
+        override val contentBytes: ByteArray by lazy {
+            GlobalHttpClient.newCall(
                 Request.Builder()
                     .get()
                     .url(contentUrl)
@@ -56,6 +56,7 @@ abstract class Image(val width: Int? = null, val height: Int? = null) : MessageC
             ).execute()
                 .expected(200)
                 .body.bytes()
+        }
 
     }
 
