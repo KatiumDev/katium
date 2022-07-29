@@ -16,10 +16,15 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'java'
     apply plugin: 'org.jetbrains.kotlin.jvm'
     apply plugin: 'org.jetbrains.dokka'
     apply plugin: 'maven-publish'
     apply plugin: 'net.kyori.indra.license-header'
+
+    java{
+        withSourcesJar()
+    }
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
