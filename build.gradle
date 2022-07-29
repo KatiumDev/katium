@@ -21,6 +21,10 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'net.kyori.indra.license-header'
 
+    java {
+        withSourcesJar()
+    }
+
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.slf4j:slf4j-simple:2.0.0-alpha7'
